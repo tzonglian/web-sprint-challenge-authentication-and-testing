@@ -3,6 +3,25 @@
   before granting access to the next middleware/route handler
 */
 
+const { json } = require("express");
+const jwt = require("jsonwebtoken");
+const { jwtSecret } = require("./secrets.js");
+
 module.exports = (req, res, next) => {
-  res.status(401).json({ you: 'shall not pass!' });
+  const token = req.headers.authorization;
+  // console.log(req.headers);
+  if (!token) {
+    console.log(token);
+    return res
+      .status(401)
+      .json({ message: "Connection refused bc you do not have a token" });
+  }
+
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Your token is bad" });
+    }
+    console.log("decoded token ->", decoded);
+    next();
+  });
 };
