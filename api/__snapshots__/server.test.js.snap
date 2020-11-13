@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`server.js module [GET] / works also using jest syntax 1`] = `
+Object {
+  "api": "API is up - Dad joke time!",
+}
+`;
